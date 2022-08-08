@@ -25,3 +25,6 @@ migrate -path db/migration -database "postgresql://root:secret@localhost:5432/si
 - - 해당query.sql.go 
 - 장점이자 단점: 생성된 파일의 내용을 수정해서는 안 됨
 - `exec`: 반환 x 
+
+#### unittesting 
+- `testify` 사용하여 assertion 
