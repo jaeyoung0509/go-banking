@@ -14,4 +14,7 @@ migratedown:
 sqlc:
 	sqlc generate
 
-.PHONY: createdb createdb dropdb migrateup migratedown
+test:
+	go test -v -cover ./...
+
+.PHONY: createdb createdb dropdb migrateup migratedown test 
