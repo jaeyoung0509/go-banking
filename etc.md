@@ -28,3 +28,10 @@ migrate -path db/migration -database "postgresql://root:secret@localhost:5432/si
 
 #### unittesting 
 - `testify` 사용하여 assertion 
+
+
+#### why do we need db transaction ? (acid)
+- to provide a reliable and consistent uow, even in case of system failure 
+- to provide isolation between programs that access the database concurrently
+- implement method 
+- - define **store struct**

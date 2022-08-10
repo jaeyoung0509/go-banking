@@ -17,4 +17,4 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: createdb createdb dropdb migrateup migratedown test 
+.PHONY: createdb createdb dropdb migrateup migratedown test  sqlc
