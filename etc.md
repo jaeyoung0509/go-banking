@@ -44,4 +44,6 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 
 ```
 
-#### debug a deadlcok
+#### avoid deadlock
+- the best defense against deadlocks is to avoid them by making sure that
+ our application always acquire locks in a consistent order.
