@@ -35,3 +35,13 @@ migrate -path db/migration -database "postgresql://root:secret@localhost:5432/si
 - to provide isolation between programs that access the database concurrently
 - implement method 
 - - define **store struct**
+
+
+##### transaction lock & how to handle deadlcok
+```sql
+SELECT * FROM accounts WHERE id = 1;
+SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
+
+```
+
+#### debug a deadlcok
