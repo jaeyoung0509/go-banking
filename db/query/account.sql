@@ -28,3 +28,14 @@ returning *;
 -- name: DeleteAccounts :exec
 delete from accounts 
 where id =$1;
+
+-- name: GetAccountForUpdate :one
+SELECT * FROM accounts
+WHERE id = $1 LIMIT 1 FOR UPDATE;
+
+
+-- name: AddAccountBalance :one
+UPDATE accounts
+SET balance = balance + sqlc.arg(amount)
+WHERE id = sqlc.arg(id)
+RETURNING *;
