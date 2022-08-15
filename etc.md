@@ -47,3 +47,23 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 #### avoid deadlock
 - the best defense against deadlocks is to avoid them by making sure that
  our application always acquire locks in a consistent order.
+
+#### understand isolation levels & read phenomena in db  (현상)
+- there are four isolation level 
+- `dirty read`phenomenon
+  -  It happens when a transaction reads data written by other concurrent transaction that has not been committed yet
+- `non-repeatable read`phenomenon
+  - when transaction reads the same record twice and see different values
+  because the row has been modified by other transaction that was committed after ther first read 
+- `phantom read`phenomenon
+  - it is similar phenomenon, but affects queries that search for multiple rows instead of one 
+  
+- `serializable anomaly`
+  - when the result of a group of concurrent commited transactions could not be achived if we try to run them sequentially in any order without overlapping each other 
+  
+|                       | read uncommited | read commited | repeatable read | serializable |
+|-----------------------|-----------------|---------------|-----------------|--------------|
+| dirty read            | O               | X             | X               | X            |
+| non-repetable read    | O               | O             | X               | X            |
+| phantom read          | O               | O             | X               | X            |
+| serialization anomaly | O               | O             | O               | X            |
