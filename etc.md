@@ -85,3 +85,6 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
    -  event trigger
    -  scheduled trigger
    -  manually trigger 
+
+#### manage env  
+- using `viper`
