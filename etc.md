@@ -67,3 +67,21 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 | non-repetable read    | O               | O             | X               | X            |
 | phantom read          | O               | O             | X               | X            |
 | serialization anomaly | O               | O             | O               | X            |
+
+
+#### github action 
+- job 
+  - is a set of steps execute on the same runner 
+  - normal jobs run in parallel
+- steps
+  - is an individual task
+  - run serially within a job 
+  - contain 1 + actions 
+- actions 
+  - is a standalone command
+  - run serially within a steps
+  - can be reused
+-  workflow
+   -  event trigger
+   -  scheduled trigger
+   -  manually trigger 
