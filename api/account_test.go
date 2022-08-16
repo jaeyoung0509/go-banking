@@ -2,6 +2,7 @@ package api
 
 import (
 	"bytes"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -16,26 +17,81 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetAccountAPI(t *testing.T) {
-	account := randomAccount()
+func TestGetAccount(t *testing.T) {
+	testCases := []struct {
+		name         string
+		accountID    int64
+		buildStubs   func(store *mockdb.MockStore)
+		expectStatus int
+	}{
+		{
+			name:      "OK",
+			accountID: 1,
+			buildStubs: func(store *mockdb.MockStore) {
+				const id int64 = 1
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(id)).
+					Return(randomAccount(), nil).
+					Times(1)
+			},
+			expectStatus: http.StatusOK,
+		},
+		{
+			name:      "NotFound",
+			accountID: 2,
+			buildStubs: func(store *mockdb.MockStore) {
+				const id int64 = 2
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(id)).
+					Return(db.Account{}, sql.ErrNoRows).
+					Times(1)
+			},
+			expectStatus: http.StatusNotFound,
+		},
+		{
+			name:      "InternalError",
+			accountID: 3,
+			buildStubs: func(store *mockdb.MockStore) {
+				const id int64 = 3
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Eq(id)).
+					Return(db.Account{}, sql.ErrConnDone).
+					Times(1)
+			},
+			expectStatus: http.StatusInternalServerError,
+		},
+		{
+			name:      "BadRequest",
+			accountID: 0,
+			buildStubs: func(store *mockdb.MockStore) {
+				store.EXPECT().
+					GetAccount(gomock.Any(), gomock.Any()).
+					Times(0)
+			},
+			expectStatus: http.StatusBadRequest,
+		},
+	}
 
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
-	store := mockdb.NewMockStore(ctrl)
-	store.EXPECT().
-		GetAccount(gomock.Any(), gomock.Eq(account.ID)).
-		Times(1).
-		Return(account, nil)
+	for i := range testCases {
+		tc := testCases[i]
+		t.Run(tc.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
 
-	server := NewServer(store)
-	recorder := httptest.NewRecorder()
+			store := mockdb.NewMockStore(ctrl)
+			tc.buildStubs(store)
 
-	url := fmt.Sprintf("/accounts/%d", account.ID)
-	request, err := http.NewRequest(http.MethodGet, url, nil)
-	require.NoError(t, err)
-	server.router.ServeHTTP(recorder, request)
-	require.Equal(t, http.StatusOK, recorder.Code)
-	requireBodyMatchAccount(t, recorder.Body, account)
+			server := NewServer(store)
+			recorder := httptest.NewRecorder()
+
+			url := fmt.Sprintf("/accounts/%d", tc.accountID)
+			request, err := http.NewRequest(http.MethodGet, url, nil)
+			require.NoError(t, err)
+
+			server.router.ServeHTTP(recorder, request)
+			require.Equal(t, tc.expectStatus, recorder.Code)
+		})
+	}
 }
 
 func randomAccount() db.Account {
