@@ -91,6 +91,7 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 
 
 #### mocking db 
+**TODO can not generate mockgen command in makefile**
 - it helps you to write independent tests more easily  
 - tests will run much faster since they don't have to spend time talking to the db 
 - it allows us to write test that acheive 100% coverage 
