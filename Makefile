@@ -9,6 +9,12 @@ dropdb:
 
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
+migrateup:
+	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
+
+migratedown1:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
+
 migratedown:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 
 
@@ -22,4 +28,4 @@ server:
 	go run main.go
 
 
-.PHONY: createdb createdb dropdb migrateup migratedown test  sqlc server 
+.PHONY: createdb createdb dropdb migrateup migratedown test  sqlc server migrateup1 migratedown1
