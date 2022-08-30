@@ -96,3 +96,15 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 - tests will run much faster since they don't have to spend time talking to the db 
 - it allows us to write test that acheive 100% coverage 
 `mockgen --build_flags=--mod=mod  github.com/jaeyoung0509/go-banking/db/sqlc Store`
+
+### secure password 
+- use `bcrpyt`
+  - bcrpyt requires a cost parameter which will decide the number of key expansion rounds or iterations of the algorithm
+  - bcrpt also generates a random salt to be used in those iterations, which will help protect against the `rainbow table attack`
+  - because of this `random salt` the algorithm will give you a completely different output hash baluse even if the same input password is provided
+  - The cost and salt will also be added to the hash to produce the final hash string
+  - in this hash string, there are 4 components
+    - the first part is the `hash algorithm identifier` 
+    - the second part is cost 
+    - the third is the salt of length 16 byte
+    - the last part is 24 bytes hash value
