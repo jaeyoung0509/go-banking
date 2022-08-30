@@ -1,5 +1,5 @@
 // Package mock_sqlc is a generated GoMock package.
-package mock_sqlc
+package mockdb
 
 import (
 	context "context"
