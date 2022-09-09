@@ -108,3 +108,17 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
     - the second part is cost 
     - the third is the salt of length 16 byte
     - the last part is 24 bytes hash value
+
+
+#### paseto
+- what is`pasto` 
+  - stronger algorithms
+  - local  - symmetric key 
+- what's the problem of jwt 
+  - weak algorithms
+  given developers too many algorithms to choose
+  some algorithms are known to be vulnerable
+  - trivial forgery
+  - the developers should check the algorithm header before verify toekn signature
+  server must check if the algorithm header matches the one it is using to sign tokens
+
