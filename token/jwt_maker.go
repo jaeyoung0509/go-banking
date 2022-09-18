@@ -10,6 +10,7 @@ import (
 
 const minSecretKeySize = 32
 
+// JWTMaker is a JSON Web Token maker
 type JWTMaker struct {
 	secretKey string
 }
