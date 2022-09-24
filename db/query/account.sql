@@ -13,10 +13,11 @@ select * from accounts
 where id = $1 limit 1;
 
 -- name: ListAccounts :many
-select * from accounts 
+select * from accounts
+where owner = $1 
 order by id
-limit $1 
-offset $2;
+limit $2 
+offset $3;
 
 -- name: UpdateAccount :one
 update accounts

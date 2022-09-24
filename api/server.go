@@ -8,6 +8,7 @@ import (
 	"github.com/go-playground/validator/v10"
 
 	db "github.com/jaeyoung0509/go-banking/db/sqlc"
+	"github.com/jaeyoung0509/go-banking/token"
 	"github.com/jaeyoung0509/go-banking/util"
 )
 
@@ -15,11 +16,11 @@ type Server struct {
 	config     util.Config
 	store      db.Store
 	router     *gin.Engine
-	tokenMaker *util.TokenMaker
+	tokenMaker token.Maker
 }
 
 func NewServer(config util.Config, store db.Store) (*Server, error) {
-	tokenMaker, err := util.NewTokenMaker(config.TokenSymmetricKey)
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
 	if err != nil {
 		return nil, fmt.Errorf("can not create token amerk :%w", err)
 	}
@@ -49,9 +50,13 @@ func (server *Server) setupRouter() {
 	router.POST("/users", server.createUser)
 	router.POST("/users/login", server.loginUser)
 	router.POST("/accounts", server.createAccount)
-	router.GET("/accounts/:id", server.getAccount)
-	router.GET("/accounts", server.listAccount)
-	router.POST("/transfers", server.createTransfer)
+
+	authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
+
+	authRoutes.GET("/accounts/:id", server.getAccount)
+	authRoutes.GET("/accounts", server.listAccount)
+	authRoutes.GET("/accounts", server.listAccount)
+	authRoutes.POST("/transfers", server.createTransfer)
 	server.router = router
 
 }

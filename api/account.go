@@ -2,10 +2,12 @@ package api
 
 import (
 	"database/sql"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	db "github.com/jaeyoung0509/go-banking/db/sqlc"
+	"github.com/jaeyoung0509/go-banking/token"
 	"github.com/lib/pq"
 )
 
@@ -66,7 +68,11 @@ func (server *Server) getAccount(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+	if account.Owner != authPayload.Username {
+		err := errors.New("account doesn't belong to user")
+		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
+	}
 	ctx.JSON(http.StatusOK, account)
 }
 
