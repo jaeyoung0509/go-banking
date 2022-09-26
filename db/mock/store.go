@@ -273,4 +273,3 @@ func (mr *MockStoreMockRecorder) UpdateAccount(arg0, arg1 interface{}) *gomock.C
         mr.mock.ctrl.T.Helper()
         return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAccount", reflect.TypeOf((*MockStore)(nil).UpdateAccount), arg0, arg1)
 }
-         

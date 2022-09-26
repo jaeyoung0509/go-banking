@@ -12,7 +12,6 @@ import (
 )
 
 type createAccountRequest struct {
-	Owner    string `json:"owner" binding:"required"`
 	Currency string `json:"currency binding:"required,currency"`
 }
 
@@ -75,6 +74,7 @@ func (server *Server) getAccount(ctx *gin.Context) {
 	if account.Owner != authPayload.Username {
 		err := errors.New("account doesn't belong to user")
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
+		return
 	}
 	ctx.JSON(http.StatusOK, account)
 }
