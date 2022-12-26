@@ -145,7 +145,7 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 
 #### [db] 트랜잭션 격리 수준
 - 트랜잭션 수준 읽기 일관성 (동시성 제어)를 위
-  ```
+```
 - READ UNCOMMITTED : 다른 트랜잭션에 커밋되지 않은 내용도 참조 가능
 - READ COMMITTED: 다른 트랜잭션에 커밋된 내용만 참조
 - REPEATABLE READ: 트랜잭션 진입하기 이전에 커밋된 내용만 참조
