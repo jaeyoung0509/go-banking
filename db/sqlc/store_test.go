@@ -16,6 +16,8 @@ func TestTransferTx(t *testing.T) {
 	// make channel
 	errs := make(chan error)
 	results := make(chan TransferTxResult)
+	// using gorutines check deadlock
+
 	n := 5
 	amount := int64(10)
 
@@ -31,7 +33,7 @@ func TestTransferTx(t *testing.T) {
 			results <- result
 		}()
 	}
-
+	//check results
 	for i := 0; i < n; i++ {
 		err := <-errs
 		require.NoError(t, err)

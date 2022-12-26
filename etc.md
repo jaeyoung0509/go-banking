@@ -47,6 +47,8 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 #### avoid deadlock
 - the best defense against deadlocks is to avoid them by making sure that
  our application always acquire locks in a consistent order.
+ - select for update 
+ - select no key for update 
 
 #### understand isolation levels & read phenomena in db  (현상)
 - there are four isolation level 
