@@ -174,3 +174,15 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 - is a standalone command
 - run serially within a step
 - can be reused
+
+
+#### why mock database
+- 독립적인 테스트
+  - 테스트 데이터 셋 충돌을 피할 수 있음
+- 빠른 테스트
+  - 디비 연결하는 시간 감소 (?)
+
+#### how to mock
+- use fake db: memory
+- use db stubs: gomock
+  - generate and build stubs that returns hard-coded values

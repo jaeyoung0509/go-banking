@@ -29,4 +29,7 @@ server:
 mock:
 	mockgen --build_flags=--mod=mod  github.com/jaeyoung0509/go-banking/db/sqlc Store
 
-.PHONY: createdb createdb dropdb migrateup migratedown mock test sqlc server migrateup1 migratedown1
+mockgen:
+	mockgen -package mockdb -destination db/mock/store.go github.com/jaeyoung0509/go-banking/db/sqlc Store 
+
+.PHONY: createdb createdb dropdb migrateup migratedown mock test sqlc server migrateup1 migratedown1 mockgen
