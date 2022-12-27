@@ -19,6 +19,7 @@ type Server struct {
 	tokenMaker token.Maker
 }
 
+// New Server create a new http server and setup routing
 func NewServer(config util.Config, store db.Store) (*Server, error) {
 	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
 	if err != nil {

@@ -154,3 +154,23 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 - 아래로 내려갈수록 트랜잭션간 고립 정도가 높아지며, 성능이 떨어짐
 - 일반적인 온라인 서비스에서는 read-commited or repeatable read를 사용
 
+
+### github action
+![](2022-12-27-14-50-13.png)
+#### runner
+- is a server to run the jobs
+- run 1 job at a time
+- github hosted or self hosted
+- report progress, logs & result to github
+#### job
+- is a set of steps execute on the same runner 
+- normal jobs in parallel
+- dependent jobs run serially
+#### step
+- is an individual task
+- run serially within a job
+- contain 1  + actions 
+#### action
+- is a standalone command
+- run serially within a step
+- can be reused
