@@ -186,3 +186,46 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
 - use fake db: memory
 - use db stubs: gomock
   - generate and build stubs that returns hard-coded values
+
+
+#### symmetric <-> asymmetric
+- symmetric 
+  - the same secret key 
+  - for local use 
+  - hs
+    - hs256 = hmac + sha256
+
+- asymmetric 
+  - the private key is used to sing token
+  - the public key is used to verify token
+  - for public use: internal service token
+  but external service needs to verify it
+  - rs256: rsa pcks + sha256
+    - public key cryptography standards
+  - ps256: rsa pss + sha256
+    - pss: probabilistic signature scheme
+  - es256:
+    - ecdsa: elliptic curve digial signature algorithm
+
+- the problem of jwt
+  - weak algorithm
+    - rsa pkcs: padding oracle attack
+    - ecdsa: invalid curve attack
+  - include the signing algorithm in the token header 
+    - algon = none
+    - it fixed many libraries
+  -  set 'alg' header to 'hs256' while the server normally verifies token with a rsa public key 
+     -  even though the token is rsa
+     but hacker set algo as 'hs256'(symmetric) then server will use symmetric method instead of rsa public
+     - so server should check token's algorithm
+#### paseto
+  - platform-agnostic-security-tokens
+  - stronger algorithms
+  - paseto have two algorithms
+    - symmetric
+    - asymmetric
+  - jwt use base64 <-> paseto aead
+    - ssl/ tls
+    - aead use crt with hmac sha384
+   ![](2022-12-30-22-56-17.png)
+   ![](2022-12-30-22-58-49.png)
