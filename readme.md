@@ -1,5 +1,6 @@
+# Reference
+- https://dev.to/techschoolguru/design-db-schema-and-generate-sql-code-with-dbdiagram-io-4ko5
 ## go banking 
-
 ### for learning
 - [x] transaction management (acid)
   - with go channel
