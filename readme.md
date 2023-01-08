@@ -230,3 +230,8 @@ SELECT * FROM accounts WHERE id = 1 FOR UPDATE; //query with lock
     - aead use crt with hmac sha384
    ![](2022-12-30-22-56-17.png)
    ![](2022-12-30-22-58-49.png)
+
+
+### docker cmd vs entrypoint 
+ docker-compose.yml 에서의 command는 Dockerfile의 CMD의 내용이 없다면 Dockerfile의 CMD 로서의 역할을 하기도 하고, 만약 원래 Dockerfile에 CMD 의 내용이 존재했다면, 그것을 Override한다는 것을 알 수 있습니다.
+ [ref](https://senticoding.tistory.com/71)
