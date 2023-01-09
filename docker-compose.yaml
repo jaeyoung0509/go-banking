@@ -17,7 +17,7 @@ services:
     depends_on:
       - postgres
     entrypoint: [
-      "/app/wait_for.sh",
+      "/app/wait-for.sh",
       "postgres:5432",
       "--",
       "/app/start.sh"
